@@ -6,6 +6,7 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.airpollutionpublicapi.AirPollutionData.Pollution
@@ -22,6 +23,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +38,22 @@ class MainActivity : AppCompatActivity() {
     private var tmY : Double = 0.0
     private var address : String = ""
 
+    private var so2 = "" // 아황산가스
+    private var co = "" // 일산화탄소
+    private var o3 = "" // 오존
+    private var no2 = "" // 일산화질소
+    private var pm10 = ""
+    private var pm25 = ""
+
+    private var so2Grade = "" // 아황산가스
+    private var coGrade = "" // 일산화탄소
+    private var o3Grade = "" // 오존
+    private var no2Grade = "" // 일산화질소
+    private var pm10Grade = ""
+    private var pm25Grade = ""
+    private var khaiGrade = "" //통합대기질
+
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -46,7 +64,16 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         requestPermission()
+        bindViews()
 
+    }
+
+    private fun bindViews() {
+
+        binding.refresh.setOnRefreshListener {
+            Log.d("testt refresh","refresh")
+            getLocation()
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -83,14 +110,131 @@ class MainActivity : AppCompatActivity() {
 
                     val pollutionList = main?.response?.body?.items?.firstOrNull()
 
-                    Log.d("testt main","${main}")
-                    Log.d("testt pollutionList","${pollutionList}")
-                    Log.d("testt pm25","${pollutionList?.pm25Value}")
+                    so2 = pollutionList?.so2Value.toString()
+                    co = pollutionList?.coValue.toString()
+                    o3 = pollutionList?.o3Value.toString()
+                    no2 = pollutionList?.no2Value.toString()
+                    pm10 = pollutionList?.pm10Value.toString()
+                    pm25 = pollutionList?.pm25Value.toString()
+
+                    khaiGrade = pollutionList?.khaiGrade.toString()
+                    so2Grade = pollutionList?.so2Grade.toString()
+                    coGrade = pollutionList?.coGrade.toString()
+                    o3Grade = pollutionList?.o3Grade.toString()
+                    no2Grade = pollutionList?.no2Grade.toString()
+                    pm10Grade = pollutionList?.pm10Grade1h.toString()
+                    pm25Grade = pollutionList?.pm25Grade1h.toString()
+
+                    Log.d("testt khaiGrade", "${khaiGrade}")
+
+                    when(khaiGrade) {
+                        "1" -> {
+                            binding.totalGradeTextView.text = "좋음"
+                            binding.totalGradleImage.setImageResource(R.drawable.verygood)
+                            binding.layout2.setBackgroundResource(R.color.blue)
+                        }
+                        "2" -> {
+                            binding.totalGradeTextView.text = "보통"
+                            binding.totalGradleImage.setImageResource(R.drawable.good)
+                            binding.layout2.setBackgroundResource(R.color.green)
+                        }
+                        "3" -> {
+                            binding.totalGradeTextView.text = "나쁨"
+                            binding.totalGradleImage.setImageResource(R.drawable.bad)
+                            binding.layout2.setBackgroundResource(R.color.yellow)
+                        }
+                        "4" -> {
+                            binding.totalGradeTextView.text = "매우나쁨"
+                            binding.totalGradleImage.setImageResource(R.drawable.verybad)
+                            binding.layout2.setBackgroundResource(R.color.gray)
+                        }
+                        else -> {
+                            binding.totalGradeTextView.text = "데이터 없음"
+                        }
+                    }
+
+                    when(pm10Grade) {
+                        "1" -> {
+                            binding.pm10ValueTextView.text = "미세먼지 : $pm10㎍/㎥  😆"
+                        }
+                        "2" -> {
+                            binding.pm10ValueTextView.text = "미세먼지 : $pm10㎍/㎥  😐"
+                        }
+                        "3" -> {
+                            binding.pm10ValueTextView.text = "미세먼지 : $pm10㎍/㎥  🙁"
+                        }
+                        "4" -> {
+                            binding.pm10ValueTextView.text = "미세먼지 : $pm10㎍/㎥  😫"
+                        }
+                        else -> {
+                            binding.pm10ValueTextView.text = "데이터 없음 🧐"
+                        }
+                    }
+
+                    when(pm25Grade) {
+                        "1" -> {
+                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  😆"
+                        }
+                        "2" -> {
+                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  😐"
+                        }
+                        "3" -> {
+                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  🙁"
+                        }
+                        "4" -> {
+                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  😫"
+                        }
+                        else -> {
+                            binding.pm25ValueTextView.text = "데이터 없음 🧐"
+                        }
+                    }
+
+                    binding.so2ValueTextView.text = so2+" ppm"
+                    binding.coValueTextView.text = co+" ppm"
+                    binding.o3ValueTextView.text = o3+" ppm"
+                    binding.no2ValueTextView.text = no2+" ppm"
+
+                    when(so2Grade) {
+                        "1" -> binding.so2GradeTextView.text = "좋음  😆"
+                        "2" -> binding.so2GradeTextView.text = "보통  😐"
+                        "3" -> binding.so2GradeTextView.text = "나쁨 🙁"
+                        "4" -> binding.so2GradeTextView.text = "매우나쁨 😫"
+                        else -> binding.so2GradeTextView.text = "데이터 없음 🧐"
+                    }
+
+                    when(coGrade) {
+                        "1" -> binding.coGradeTextView.text = "좋음  😆"
+                        "2" -> binding.coGradeTextView.text = "보통  😐"
+                        "3" -> binding.coGradeTextView.text = "나쁨 🙁"
+                        "4" -> binding.coGradeTextView.text = "매우나쁨 😫"
+                        else -> binding.coGradeTextView.text = "데이터 없음 🧐"
+                    }
+
+                    when(o3Grade) {
+                        "1" -> binding.o3GradeTextView.text = "좋음  😆"
+                        "2" -> binding.o3GradeTextView.text = "보통  😐"
+                        "3" -> binding.o3GradeTextView.text = "나쁨 🙁"
+                        "4" -> binding.o3GradeTextView.text = "매우나쁨 😫"
+                        else -> binding.o3GradeTextView.text = "데이터 없음 🧐"
+                    }
+
+                    when(no2Grade) {
+                        "1" -> binding.no2GradeTextView.text = "좋음  😆"
+                        "2" -> binding.no2GradeTextView.text = "보통  😐"
+                        "3" -> binding.no2GradeTextView.text = "나쁨 🙁"
+                        "4" -> binding.no2GradeTextView.text = "매우나쁨 😫"
+                        else -> binding.no2GradeTextView.text = "데이터 없음 🧐"
+                    }
+
+                    binding.progressBar.visibility = View.INVISIBLE
+                    binding.layout2.visibility = View.VISIBLE
                 }
             }
 
             override fun onFailure(call: Call<Pollution>, t: Throwable) {
                 Log.d("testt","${t.message}")
+                binding.progressBar.visibility = View.INVISIBLE
+                binding.errorTextView.visibility = View.VISIBLE
             }
         })
     }
@@ -110,8 +254,10 @@ class MainActivity : AppCompatActivity() {
                     val station = response.body()
 
                     val stationAddress = station?.response?.body?.items?.firstOrNull()?.stationName
+                    val longAddress = station?.response?.body?.items?.firstOrNull()?.addr
                     address = stationAddress.toString()
 
+                    binding.stationAddressTextView.text = "측정소 위치 : ${longAddress}"
                     Log.d("testt station", "${station}")
                     Log.d("testt address", "${address}")
                     Log.d("testt address2", "${stationAddress}")
@@ -122,6 +268,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Station>, t: Throwable) {
                 Log.d("testt","${t.message}")
+                binding.progressBar.visibility = View.INVISIBLE
+                binding.errorTextView.visibility = View.VISIBLE
             }
         })
     }
@@ -137,6 +285,20 @@ class MainActivity : AppCompatActivity() {
                 lat = location.latitude
                 lon = location.longitude
                 Log.d("testt location ", "latitude : ${lat}, longitude : ${lon}")
+
+                geocoder = Geocoder(this, Locale.getDefault())
+
+                val address = geocoder.getFromLocation(lat, lon, 1)
+                Log.d("testt subLocality","${address[0].subLocality}") // 송파구
+                Log.d("testt thoroughfare","${address[0].thoroughfare}") // 문정동
+
+                var subLocality = address[0].subLocality
+                var thoroughfare = address[0].thoroughfare
+
+                if (thoroughfare == null)
+                    thoroughfare = ""
+
+                binding.myAddress.text = "${subLocality} ${thoroughfare}"
 
                 val retrofit = Retrofit.Builder()
                     .baseUrl("https://dapi.kakao.com/")
@@ -163,16 +325,17 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onFailure(call: Call<TmCordinatesResponse>, t: Throwable) {
                         Log.d("testt","${t.message}")
+                        binding.progressBar.visibility = View.INVISIBLE
+                        binding.errorTextView.visibility = View.VISIBLE
                     }
-
                 })
-
 
             } catch (e : IOException) {
                 e.printStackTrace()
                 Toast.makeText(this,"error 발생 다시 시도", Toast.LENGTH_SHORT).show()
             } finally {
                 Log.d("testt finish","finish")
+                binding.refresh.isRefreshing = false
             }
         }
     }
