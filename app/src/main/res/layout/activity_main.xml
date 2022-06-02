@@ -27,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:text="예기치 못한 문제가 발생했습니다.\n잠시 후 다시 시도해주세요. \n문제가 계속될 경우 에어코리아 공지사항을 확인하시기 바랍니다"
+            android:autoLink="web"
+            android:text=" 예기치 못한 문제가 발생했습니다.\n 잠시 후 다시 시도해주세요. \n 문제가 계속될 경우 에어코리아 공지사항을 확인하시기 바랍니다. \n https://www.airkorea.or.kr/web/board/1/?pMENU_NO=143"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,17 +45,18 @@
             <TextView
                 android:id="@+id/myAddress"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
                 android:text="강남대로"
+                android:textColor="@color/white"
                 android:textSize="50dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/totalGradeTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="10dp"
                 tools:text="강남대로" />
 
             <TextView
@@ -64,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="매우 나쁨"
+                android:textColor="@color/white"
                 android:textSize="30dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/totalGradleImage"
@@ -90,6 +92,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="미세먼지: 40 😀"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/pm25ValueTextView"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="초미세먼지: 10 😇"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/pm10ValueTextView"
@@ -145,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="아황산가스"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="아황산가스" />
 
@@ -156,6 +160,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="좋음 😄"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="좋음 😄" />
 
@@ -166,6 +171,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="130 ppm"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="130 ppm" />
 
@@ -185,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="일산화탄소"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="일산화탄소" />
 
@@ -196,6 +202,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="좋음 😄"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="좋음 😄" />
 
@@ -206,6 +213,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="130 ppm"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="130 ppm" />
 
@@ -225,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="오존"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="오존" />
 
@@ -236,6 +244,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="좋음 😄"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="좋음 😄" />
 
@@ -246,6 +255,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="130 ppm"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="130 ppm" />
 
@@ -265,7 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="일산화질소"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="일산화질소" />
 
@@ -276,6 +286,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="좋음 😄"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="좋음 😄" />
 
@@ -286,6 +297,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="130 ppm"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         tools:text="130 ppm" />
 
@@ -309,16 +321,16 @@
                 android:id="@+id/stationAddressTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginBottom="20dp"
                 android:maxLines="1"
+                android:textColor="@color/white"
                 app:autoSizeMaxTextSize="12sp"
                 app:autoSizeMinTextSize="8sp"
                 app:autoSizeTextType="uniform"
-                android:layout_marginStart="20dp"
                 app:layout_constraintBottom_toTopOf="@id/additionalInformationTextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/lowerDivider"
+                app:layout_constraintStart_toStartOf="@id/lowerDivider"
                 tools:text="측정소 위치: 서울시 강남대로...." />
 
             <TextView

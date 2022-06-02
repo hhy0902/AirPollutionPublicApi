@@ -69,10 +69,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindViews() {
-
         binding.refresh.setOnRefreshListener {
             Log.d("testt refresh","refresh")
+            binding.errorTextView.visibility = View.INVISIBLE
+            binding.layout2.visibility = View.INVISIBLE
+            binding.progressBar.visibility = View.VISIBLE
             getLocation()
+
         }
     }
 
@@ -135,21 +138,23 @@ class MainActivity : AppCompatActivity() {
                         }
                         "2" -> {
                             binding.totalGradeTextView.text = "보통"
-                            binding.totalGradleImage.setImageResource(R.drawable.good)
+                            binding.totalGradleImage.setImageResource(R.drawable.bad)
                             binding.layout2.setBackgroundResource(R.color.green)
                         }
                         "3" -> {
                             binding.totalGradeTextView.text = "나쁨"
-                            binding.totalGradleImage.setImageResource(R.drawable.bad)
+                            binding.totalGradleImage.setImageResource(R.drawable.bad2_1)
                             binding.layout2.setBackgroundResource(R.color.yellow)
                         }
                         "4" -> {
                             binding.totalGradeTextView.text = "매우나쁨"
                             binding.totalGradleImage.setImageResource(R.drawable.verybad)
-                            binding.layout2.setBackgroundResource(R.color.gray)
+                            binding.layout2.setBackgroundResource(R.color.red)
                         }
                         else -> {
                             binding.totalGradeTextView.text = "데이터 없음"
+                            binding.totalGradleImage.setImageResource(R.drawable.question)
+                            binding.layout2.setBackgroundResource(R.color.gray)
                         }
                     }
 
@@ -167,25 +172,25 @@ class MainActivity : AppCompatActivity() {
                             binding.pm10ValueTextView.text = "미세먼지 : $pm10㎍/㎥  😫"
                         }
                         else -> {
-                            binding.pm10ValueTextView.text = "데이터 없음 🧐"
+                            binding.pm10ValueTextView.text = "미세먼지 : 데이터 없음 🧐"
                         }
                     }
 
                     when(pm25Grade) {
                         "1" -> {
-                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  😆"
+                            binding.pm25ValueTextView.text = "초미세먼지 : ${pm25}㎍/㎥  😆"
                         }
                         "2" -> {
-                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  😐"
+                            binding.pm25ValueTextView.text = "초미세먼지 : ${pm25}㎍/㎥  😐"
                         }
                         "3" -> {
-                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  🙁"
+                            binding.pm25ValueTextView.text = "초미세먼지 : ${pm25}㎍/㎥  🙁"
                         }
                         "4" -> {
-                            binding.pm25ValueTextView.text = "미세먼지 : ${pm25}㎍/㎥  😫"
+                            binding.pm25ValueTextView.text = "초미세먼지 : ${pm25}㎍/㎥  😫"
                         }
                         else -> {
-                            binding.pm25ValueTextView.text = "데이터 없음 🧐"
+                            binding.pm25ValueTextView.text = "초미세먼지 : 데이터 없음 🧐"
                         }
                     }
 
@@ -257,7 +262,7 @@ class MainActivity : AppCompatActivity() {
                     val longAddress = station?.response?.body?.items?.firstOrNull()?.addr
                     address = stationAddress.toString()
 
-                    binding.stationAddressTextView.text = "측정소 위치 : ${longAddress}"
+                    binding.stationAddressTextView.text = "측정소 : ${longAddress}"
                     Log.d("testt station", "${station}")
                     Log.d("testt address", "${address}")
                     Log.d("testt address2", "${stationAddress}")
