@@ -128,6 +128,11 @@ class MainActivity : AppCompatActivity() {
                     pm10Grade = pollutionList?.pm10Grade1h.toString()
                     pm25Grade = pollutionList?.pm25Grade1h.toString()
 
+                    binding.so2ValueTextView.text = so2+" ppm"
+                    binding.coValueTextView.text = co+" ppm"
+                    binding.o3ValueTextView.text = o3+" ppm"
+                    binding.no2ValueTextView.text = no2+" ppm"
+
                     Log.d("testt khaiGrade", "${khaiGrade}")
 
                     when(khaiGrade) {
@@ -193,11 +198,6 @@ class MainActivity : AppCompatActivity() {
                             binding.pm25ValueTextView.text = "초미세먼지 : 데이터 없음 🧐"
                         }
                     }
-
-                    binding.so2ValueTextView.text = so2+" ppm"
-                    binding.coValueTextView.text = co+" ppm"
-                    binding.o3ValueTextView.text = o3+" ppm"
-                    binding.no2ValueTextView.text = no2+" ppm"
 
                     when(so2Grade) {
                         "1" -> binding.so2GradeTextView.text = "좋음  😆"
